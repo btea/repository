@@ -1,3 +1,0 @@
-test
-this is a local new.
-中文会乱码吗

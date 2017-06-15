@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<style>
+		#container{width: 90%;margin: 0 auto;}
+		.blank div{
+			position: relative;
+			margin-right: 15px;
+		}
+		.xiaoniao{position: relative;}
+		.xiaoniao:after,.blank:after{
+			content: "";
+			display: block;
+			visibility: hidden;
+			width: 0;
+			height: 0;
+			clear: both;
+		}
+		.xiaoniao img,.blank img{
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+		}
+		.xiaoniao img,.xiaoniao div{float: left;}
+		.blank img,.blank div{float: right;}
+		.xiaoniao div,.blank div{
+			font-size: 15px;
+			padding: 15px;
+			min-height: 45px;
+			box-sizing: border-box;
+			max-width: 80%;
+		}
+		#bg>div{
+			margin: 10px 0;
+		}
+		#entry .left{
+			width: 100%;
+			height: 50px;
+			border: 1px solid #6cf;
+			margin: 10px 0;
+
+		}
+		#entry .right{
+			width: 40px;
+			height: 20px;
+			text-align: center;
+			margin:0 auto;
+		}
+		#entry .right button{
+			border: none;
+			cursor: pointer;
+		}
+		.xiaoniao div{
+			background: #6D72D8;
+			border-radius: 5px;
+			position: relative;
+			left: 20px;
+			top: 0;
+		}
+		.xiaoniao div:before{
+			content: "";
+			border-right: 10px solid #6D72D8;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			position: absolute;
+			left: -10px;
+			top: 10px;
+		}
+		.blank div{
+			background: #5782D2;
+			border-radius: 5px;
+		}
+		.blank div:after{
+			content: "";
+			border-left: 10px solid #5782D2;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			position: absolute;
+			right: -10px;
+			top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="bg">
+			<div class="xiaoniao">
+				<img src="timg.jpg" alt="粉碎吧，精神 炸裂吧，现实">
+				<div>吾乃邪王真眼~</div>
+			</div>
+			<time></time>
+			<div class="blank">
+				<img src="5.png" alt="【 】">
+				<div>空白永不败北！</div>
+			</div>
+		</div>
+		<div id="entry">
+			<div class="left" contenteditable="true"></div>
+			<div class="right">
+				<button><i class="material-icons mu-icon">send</i></button>
+			</div>
+		</div>
+	</div>
+	
+	<script src="jquery-1.11.3.js"></script>
+	<script>
+		$(".right").click(function(){
+			let content = $(".left").text();
+			let data = "key=02e9e807348444dc9254c3f4a9eaf9a0";
+			data += "&info="+content;
+			data += "&userid=1234";
+			$.ajax({
+				type: "post",
+				url: "http://www.tuling123.com/openapi/api",
+				data: data,
+				dataType: 'json',
+				success: function(data){
+					xiaoniaoshow(data);
+				}
+			})
+			let blankcon = $(".left").text();
+			blankshow(blankcon);
+		})
+		function xiaoniaoshow(data){
+			let xiao = $($(".xiaoniao")[0]).clone();
+			$(xiao[0].children[1]).text(data.text);
+			$("#bg").append(xiao);
+		}
+		function blankshow(blankcon){
+			let blank = $($(".blank")[0]).clone();
+			$(blank[0].children[1]).text(blankcon);
+			$("#bg").append(blank);
+			$(".left").text('');
+		}
+		$(window).keyup(function(e){
+			if(e.keyCode == 13){
+				$(".right").click();
+			}
+		})
+	</script>
+</body>
+</html>
